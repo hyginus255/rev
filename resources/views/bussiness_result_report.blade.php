@@ -1,0 +1,147 @@
+@extends('layouts.app')
+@section('header')
+<style>
+    .links-margin{margin:3px;}
+</style>
+@endsection
+@section('content')
+<script type="text/javascript">
+    window.onload = function () {
+        var chart = new CanvasJS.Chart("chartContainer", {
+            data: [
+            {
+                type: "doughnut",
+                startAngle: 60,
+                //innerRadius: 60,
+                indexLabelFontSize: 17,
+                indexLabel: "{label} - #percent%",
+                toolTipContent: "<b>{label}:</b> {y} (#percent%)",
+                dataPoints: <?php echo json_encode($data_points, JSON_NUMERIC_CHECK); ?>
+            }
+            ]
+        });
+
+        chart.render();
+    }
+</script>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">Search Result</div>
+
+                <div class="card-body">
+                    
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
+                    <div class="container">
+                            <div class="row">
+                                <ul class="nav nav-tabs">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="{{route('business_search_report')}}">Back to Search</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#">General Report</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#">Bulding Report</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#">Staff Report</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#">Ward Report</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#">Streets Report</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#">Category Report</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#">Revenue Report</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3" style="padding:25px 20px 10px 20px;">
+                                    <div class="form-group">
+                                    <label for="chart_type"><strong>Chart Type</strong></label>
+                                    <select class="form-control" id="chart_type">
+                                        <option>Select Chart Type</option>
+                                        <option>Pie Chart</option>
+                                        <option>Bar Chart</option>
+                                        <option>Line Chart</option>
+                                    </select>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <br/><br/>
+                        <hr/>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <strong>Table</strong>
+                                </div>
+                            </div>
+                            <div class="row" style="padding:10px;">
+                                <div class="col-md-12">
+                                    <ul class="nav justify-content-end">
+                                        <li class="nav-item links-margin">
+                                            <a class="btn btn-primary active" href="#">Download PDF File</a>
+                                        </li>
+                                        <li class="nav-item links-margin">
+                                            <a class="btn btn-danger" href="#">Download Excel File</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <script src="http://maps.googleapis.com/maps/api/js"></script>
+                                <div class="col-md-12">
+                                    <table class="table">
+                                        <thead class="bg-info">
+                                            <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">First</th>
+                                            <th scope="col">Last</th>
+                                            <th scope="col">Handle</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                            <th scope="row">1</th>
+                                            <td>Mark</td>
+                                            <td>Otto</td>
+                                            <td>@mdo</td>
+                                            </tr>
+                                            <tr>
+                                            <th scope="row">2</th>
+                                            <td>Jacob</td>
+                                            <td>Thornton</td>
+                                            <td>@fat</td>
+                                            </tr>
+                                        </tbody>
+                                        </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection

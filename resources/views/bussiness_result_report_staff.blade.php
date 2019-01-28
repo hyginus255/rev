@@ -5,8 +5,8 @@
 </style>
 @endsection
 @section('content')
-<script type="text/javascript">
-    window.onload = function() {
+<script>
+window.onload = function() {
     var chart = new CanvasJS.Chart("chartContainer",
 	{
         animationEnabled: true,
@@ -25,16 +25,16 @@
             type: "pie",
             dataPoints: <?php echo json_encode($data_points, JSON_NUMERIC_CHECK); ?>
         }
-      ]
+        ]
     });
 
-    chart.render();
+ chart.render();
 
-    var chartType = document.getElementById('chartType');
-    chartType.addEventListener( "change",  function(){
-    chart.options.data[0].type = chartType.options[chartType.selectedIndex].value;
-    chart.render();
-    });
+var chartType = document.getElementById('chartType');
+chartType.addEventListener( "change",  function(){
+  chart.options.data[0].type = chartType.options[chartType.selectedIndex].value;
+  chart.render();
+});
 }
 </script>
 <div class="container">
@@ -58,13 +58,13 @@
                                         <a class="nav-link" href="{{route('business_search_report')}}">Back to Search</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link active" href="#">General Report</a>
+                                        <a class="nav-link" href="#">General Report</a>
                                     </li>
                                     <li class="nav-item">
-                                    <a class="nav-link" href="{{route('business_result_report_building')}}">Bulding Report</a>
+                                        <a class="nav-link" href="{{route('business_result_report_building')}}">Bulding Report</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="{{route('business_result_report_staff')}}">Staff Report</a>
+                                        <a class="nav-link active" href="{{route('business_result_report_staff')}}">Staff Report</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="#">Ward Report</a>

@@ -145,7 +145,9 @@ class HomeController extends Controller
             ->whereDate('businesses.created_at', '>=', $registered_on)
             ->whereDate('businesses.created_at', '<=', $registered_to)
             ->get();
-
+        //dd($search_result);
+        session(['report_search' => $search_result]);
+        //dd(session('report_search'));
         $count_search_result = count($search_result);
         if( $count_search_result == 0){
             return back()->with('info', 'No search record found. Kindly try again !');
@@ -154,14 +156,62 @@ class HomeController extends Controller
         $search_result = $search_result->groupBy('business_category');
         $search_result = $search_result->toArray();
         $data_points = array();
+        $search_info = ["name" => "Business Report", "axisY" => "Number of Business", "axisX" => "Business"];
+        //dd($info);
         
         foreach ($search_result as $key => $result) {
             $points = array("y" => count($result), "label" => $key);
             array_push($data_points, $points);
         }
 
-        return view('bussiness_result_report',compact('data_points'));
+        return view('bussiness_result_report',compact('data_points','search_info'));
         
+    }
+
+    /**
+     * Show the building report.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function business_result_report_building(){
+        //dd(session('report_search'));
+        $search_result = session('report_search');
+        $search_result = $search_result->groupBy('building_type');
+        //dd($search_result);
+        $search_result = $search_result->toArray();
+        $data_points = array();
+        $search_info = ["name" => "Building Report", "axisY" => "Number of Buildings", "axisX" => "Buildings"];
+        
+        foreach ($search_result as $key => $result) {
+            $points = array("y" => count($result), "label" => $key);
+            array_push($data_points, $points);
+        }
+
+        return view('bussiness_result_report_building',compact('data_points','search_info'));
+
+    }
+
+     /**
+     * Show the staff report.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function business_result_report_staff(){
+        dd(session('report_search'));
+        $search_result = session('report_search');
+        $search_result = $search_result->groupBy('building_type');
+        //dd($search_result);
+        $search_result = $search_result->toArray();
+        $data_points = array();
+        $search_info = ["name" => "Staff Report", "axisY" => "Number of Staffs", "axisX" => "Staffs"];
+        
+        foreach ($search_result as $key => $result) {
+            $points = array("y" => count($result), "label" => $key);
+            array_push($data_points, $points);
+        }
+
+        return view('bussiness_result_report_building',compact('data_points','search_info'));
+
     }
 
     /**
@@ -201,7 +251,7 @@ class HomeController extends Controller
 
         
         $search_result = DB::table('businesses')
-            ->select('businesses.business_name','buildings.Latitude', 'buildings.Longitude')
+            ->select('businesses.business_name','buildings.Latitude', 'buildings.Longitude', 'lands.Latitude','lands.Longitude')
             ->leftJoin('buildings', 'businesses.building_id', '=', 'buildings.building_id')
             ->leftJoin('_apartments', 'businesses.apartment_id', '=', '_apartments.apartment_id')
             ->leftJoin('lands', 'buildings.land_id', '=', 'lands.land_id')
@@ -217,7 +267,7 @@ class HomeController extends Controller
             ->whereDate('businesses.created_at', '>=', $registered_on)
             ->whereDate('businesses.created_at', '<=', $registered_to)
             ->get();
-        //dd($search_result);
+        dd($search_result);
 
         $search_result = $search_result->toArray();
         //dd($search_result);

@@ -80,7 +80,7 @@
                     <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
                     </script>
                     <script async defer
-                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBe-RmhBRkRcquAMNv2mKZJ6iA81pX6_Dw&callback=initMap">
+                    src="https://maps.googleapis.com/maps/api/js?key=s&callback=initMap">
                     </script>
                 </div>
             </div>
